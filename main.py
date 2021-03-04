@@ -1,22 +1,13 @@
-import logging, random, kb, asyncio, re
+import random, kb, asyncio, re
 
-from states import Url, Lk
-from bot import TOKEN, unknown
+from bot import unknown
+from aiogram import types
 from create import create_link
+from states import Lk, Url, Mailing
+from loader import dp, bot, storage
 from aiogram.dispatcher import FSMContext
-from aiogram import Bot, Dispatcher, executor, types
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-# уровень логов
-logging.basicConfig(level=logging.INFO)
-
-# место хранения данных FSM
-storage = MemoryStorage()
-
-# инициализация бота
-bot = Bot(token=TOKEN)
-dp = Dispatcher(bot, storage=storage)
 
 # хэндлер на команду start
 @dp.message_handler(commands=['start'])
@@ -330,7 +321,3 @@ async def sell(callback_query: types.CallbackQuery, state:FSMContext):
 	await bot.send_message(callback_query.from_user.id, 'Недостаточно 💎 для действия. Обмен возможет только от 199, в скором времени у нас расширится база каналов и ты получишь еще больше кристаллов\n\n'
 		'Если отпишешься от канала, ты потеряешь все заработанные 💎. Нажимай Назад, чтобы вернуться в Личный кабинет',
 		reply_markup=kb.reply_back)
-
-
-if __name__ == '__main__':
-	executor.start_polling(dp, skip_updates=True)
