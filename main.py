@@ -21,91 +21,78 @@ dp = Dispatcher(bot, storage=storage)
 # хэндлер на команду start
 @dp.message_handler(commands=['start'])
 async def start(message: types.Message):
-	button_youtube0 = InlineKeyboardButton('Подписаться', url='https://t.me/joinchat/R1Ct6BRjHCkO_AYO')
+	button_youtube0 = InlineKeyboardButton('Подписаться', url='t.me/joinchat/R1Ct6BRjHCkO_AYO')
 	inline_youtube0 = InlineKeyboardMarkup(row_width=1).add(button_youtube0)
 
-	await message.answer('Подпишись на наш канал — Скачать Видео Ютуб в котором мы постим обновления бота и не только...!\n'
-		'После подписки ты сможешь 💾 Скачать видео',
+	await message.answer('Подпишись на наш канал — Скачать Видео Ютуб в котором мы постим обновления бота, выкладываем интеремную информацию в сфере IT, а также устраиваем розыгрыши!\n\n'
+		'Мы будем очень благодарны тебе 🥰',
 		reply_markup=inline_youtube0)
 	
-	await message.answer('Если подписался, перейди в Главное меню, чтобы увидеть возможности.\n'
+	await message.answer('Перейди в Главное меню, чтобы Скачать видео\n'
 		'PS: Нажми на кнопку внизу 👇',
 		reply_markup=kb.reply_main)
 
 # хэндлер сообщений
 @dp.message_handler()
 async def message(message: types.Message):
-	user_channel = await bot.get_chat_member(chat_id=-1001196469736, user_id=message.from_user.id)
-	if user_channel["status"] == 'left':
-		"""для тех кто не подписался"""
-		button_youtube1 = InlineKeyboardButton('Подписаться', url='https://t.me/joinchat/R1Ct6BRjHCkO_AYO')
-		inline_youtube1 = InlineKeyboardMarkup(row_width=1).add(button_youtube1)
-		await bot.send_message(message.from_user.id, 'Я проверил, ты не подписался. Подпишись 😉',
-			reply_markup=inline_youtube1)
+	if message.text == '🏠 Главное меню':
+		await message.answer('Ты находишься в Главном меню\n'
+			'Чтобы скачать видео, нажми 💾 Скачать видео\n'
+			'Зайти в ЛК, нажми 📰 Личный кабинет\n'
+			'Есть вопрос, нажми на кнопку ниже',
+			reply_markup=kb.reply_load_lk)
 
-		await message.answer('Если подписался, перейди в Главное меню, чтобы увидеть возможности.\n'
-			'PS: Нажми на кнопку внизу 👇',
+	elif message.text == '💾 Скачать видео':
+		await message.answer('Выбери тип, откуда ты хочешь отправить ссылку и придерживайся инструкции!',
+			reply_markup=kb.reply_device_main)
+
+	elif message.text == '📱 Приложение':
+		await message.answer('Как отправить ссылку из приложения:\n'
+			'Ты можешь нажать на значок поделиться, который находится под видеороликом и затем выбрать Telegram\n\n'
+			'Жду ссылку от тебя)',
+			reply_markup=kb.reply_back)
+		await Url.app.set()
+
+	elif message.text == '🖥 Cайт':
+		await message.answer('Как отправить ссылку с сайта:\n'
+			'1) Ты можешь скопировать её из адресной строки браузера и отправить мне\n'
+			'2) Ты можешь нажать на значок поделиться, который находится под видеороликом и затем выбрать Telegram\n\n'
+			'Жду ссылку от тебя)',
+			reply_markup=kb.reply_back)
+		await Url.site.set()
+
+	elif message.text == '💻 Мобильная версия сайта':
+		await message.answer('Как отправить ссылку с мобильной версии сайта:\n'
+			'1) Ты можешь скопировать её из адресной строки мобильного браузера и отправить мне\n'
+			'2) Ты можешь нажать на значок поделиться, который находится под видеороликом и затем выбрать Telegram\n\n'
+			'Жду ссылку от тебя)',
+			reply_markup=kb.reply_back)
+		await Url.msite.set()
+
+	elif message.text == '🔄 Скачать ещё раз':
+		await message.answer('Выбери тип, откуда ты хочешь отправить ссылку и придерживайся инструкции!',
+			reply_markup=kb.reply_device_main)
+
+	elif message.text == '📰 Личный кабинет':
+		await message.answer('Ты зашёл в Личный кабинет, в разделе\n'
+			'📚 Наши каналы можно подписаться за вознаграждение. Заработанные кристаллы можно увидеть в разделе 💎 Мои кристаллы',
+			reply_markup=kb.reply_lk)
+		await Lk.choice.set()
+
+	elif message.text == '💬 Служба поддержки':
+		await message.answer('⬇️ По всем вопросам сюда ⬇️\n'
+			'                   t.me/Flaiers',
 			reply_markup=kb.reply_main)
+
+	elif message.text == '⬅️ Назад':
+		await message.answer('Ты зашёл в Личный кабинет, в разделе\n'
+			'📚 Наши каналы можно подписаться за вознаграждение. Заработанные кристаллы можно увидеть в разделе 💎 Мои кристаллы',
+			reply_markup=kb.reply_lk)
+		await Lk.choice.set()
+
 	else:
-		"""для тех кто подписался"""
-		if message.text == '🏠 Главное меню':
-			await message.answer('Ты находишься в Главном меню\n'
-				'Чтобы скачать видео, нажми 💾 Скачать видео\n'
-				'Зайти в ЛК, нажми 📰 Личный кабинет\n'
-				'Есть вопрос, нажми на кнопку ниже',
-				reply_markup=kb.reply_load_lk)
-
-		elif message.text == '💾 Скачать видео':
-			await message.answer('Выбери тип, откуда ты хочешь отправить ссылку и придерживайся инструкции!',
-				reply_markup=kb.reply_device_main)
-
-		elif message.text == '📱 Приложение':
-			await message.answer('Как отправить ссылку из приложения:\n'
-				'Ты можешь нажать на значок поделиться, который находится под видеороликом и затем выбрать Telegram\n\n'
-				'Жду ссылку от тебя)',
-				reply_markup=kb.reply_back)
-			await Url.app.set()
-
-		elif message.text == '🖥 Cайт':
-			await message.answer('Как отправить ссылку с сайта:\n'
-				'1) Ты можешь скопировать её из адресной строки браузера и отправить мне\n'
-				'2) Ты можешь нажать на значок поделиться, который находится под видеороликом и затем выбрать Telegram\n\n'
-				'Жду ссылку от тебя)',
-				reply_markup=kb.reply_back)
-			await Url.site.set()
-
-		elif message.text == '💻 Мобильная версия сайта':
-			await message.answer('Как отправить ссылку с мобильной версии сайта:\n'
-				'1) Ты можешь скопировать её из адресной строки мобильного браузера и отправить мне\n'
-				'2) Ты можешь нажать на значок поделиться, который находится под видеороликом и затем выбрать Telegram\n\n'
-				'Жду ссылку от тебя)',
-				reply_markup=kb.reply_back)
-			await Url.msite.set()
-
-		elif message.text == '🔄 Скачать ещё раз':
-			await message.answer('Выбери тип, откуда ты хочешь отправить ссылку и придерживайся инструкции!',
-				reply_markup=kb.reply_device_main)
-
-		elif message.text == '📰 Личный кабинет':
-			await message.answer('Ты зашёл в Личный кабинет, в разделе\n'
-				'📚 Наши каналы можно подписаться за вознаграждение. Заработанные кристаллы можно увидеть в разделе 💎 Мои кристаллы',
-				reply_markup=kb.reply_lk)
-			await Lk.choice.set()
-
-		elif message.text == '💬 Служба поддержки':
-			await message.answer('⬇️ По всем вопросам сюда ⬇️\n'
-				'                   t.me/Flaiers',
-				reply_markup=kb.reply_main)
-
-		elif message.text == '⬅️ Назад':
-			await message.answer('Ты зашёл в Личный кабинет, в разделе\n'
-				'📚 Наши каналы можно подписаться за вознаграждение. Заработанные кристаллы можно увидеть в разделе 💎 Мои кристаллы',
-				reply_markup=kb.reply_lk)
-			await Lk.choice.set()
-
-		else:
-			await message.answer(random.choice(unknown),
-				reply_markup=kb.reply_load_lk)
+		await message.answer(random.choice(unknown),
+			reply_markup=kb.reply_load_lk)
 
 # хэндлер личного кабинета
 @dp.message_handler(state=Lk.choice, content_types=types.ContentTypes.TEXT)
@@ -118,7 +105,7 @@ async def lk(message: types.Message, state: FSMContext):
 			button_sell = InlineKeyboardButton('Обмен кристаллов', callback_data='sell')
 			inline_sell = InlineKeyboardMarkup(row_width=1).add(button_sell)
 			try:
-				user_channel = await bot.get_chat_member(chat_id=-1001269993979, user_id=message.from_user.id)
+				user_channel = await bot.get_chat_member(chat_id=-1001196469736, user_id=message.from_user.id)
 				if user_channel["status"] == 'left':
 					"""для тех кто не подписался"""
 					await message.answer('У тебя на счету 💳:\n'
@@ -153,10 +140,10 @@ async def lk(message: types.Message, state: FSMContext):
 				'Эти кристаллы можно будет обменивать на различные подписки, бонусы и скидки',
 				reply_markup=kb.reply_back)
 
-			button_fla = InlineKeyboardButton('Fla.Money', url='t.me/joinchat/AAAAAEuykfvcr7wTy1J7ug')
+			button_fla = InlineKeyboardButton('Скачать Видео Ютуб', url='t.me/joinchat/R1Ct6BRjHCkO_AYO')
 			button_fla_check = InlineKeyboardButton('✅ Проверить', callback_data='fla_check')
 			inline_fla = InlineKeyboardMarkup(row_width=2).add(button_fla, button_fla_check)
-			await message.answer('Наш канал — Fla.Money в котором мы постим выигрышные исходы матчей до их начала. Так же можно купить подписку Premium, которая доступ ко всем выигрышным исходам матчей без ограничения по времени и количеству',
+			await message.answer('Наш канал — Скачать Видео Ютуб в котором мы постим обновления бота, выкладываем интеремную информацию в сфере IT, а также устраиваем розыгрыши!',
 				reply_markup=inline_fla)
 
 			await state.reset_state()
@@ -227,9 +214,15 @@ async def site(message: types.Message, state: FSMContext):
 				big_url = answer.split('/')[3]
 				try:
 					url = big_url.split('=')[1]
-					button_site_720 = InlineKeyboardButton('📹 Видео 720', url=f'https://presaver.com/{url}/download/22')
-					button_site_360 = InlineKeyboardButton('🎥 Видео 360', url=f'https://presaver.com/{url}/download/18')
-					button_site_pic = InlineKeyboardButton('🌃 Получить превью', url=f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg')
+					link_720 = f'https://presaver.com/{url}/download/22'
+					link_360 = f'https://presaver.com/{url}/download/18'
+					link_image = f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg'
+					url_720 = create_link(link_720)
+					url_360 = create_link(link_360)
+					url_image = create_link(link_image)
+					button_site_720 = InlineKeyboardButton('📹 Видео 720', url=url_720)
+					button_site_360 = InlineKeyboardButton('🎥 Видео 360', url=url_360)
+					button_site_pic = InlineKeyboardButton('🌃 Получить превью', url=url_image)
 					inline_url_site = InlineKeyboardMarkup(row_width=2).add(button_site_720, button_site_360, button_site_pic)
 					await message.answer('Вот и кнопки на скачивание видеоролика\n'
 						'Кликай на ту кнопку соответственно которой хочешь разрешение видеоролика:',
@@ -238,9 +231,15 @@ async def site(message: types.Message, state: FSMContext):
 						reply_markup=kb.reply_r_main)
 					await state.reset_state()
 				except:
-					button_site_720 = InlineKeyboardButton('📹 Видео 720', url=f'https://presaver.com/{big_url}/download/22')
-					button_site_360 = InlineKeyboardButton('🎥 Видео 360', url=f'https://presaver.com/{big_url}/download/18')
-					button_site_pic = InlineKeyboardButton('🌃 Получить превью', url=f'https://i.ytimg.com/vi/{big_url}/maxresdefault.jpg')
+					link_720 = f'https://presaver.com/{url}/download/22'
+					link_360 = f'https://presaver.com/{url}/download/18'
+					link_image = f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg'
+					url_720 = create_link(link_720)
+					url_360 = create_link(link_360)
+					url_image = create_link(link_image)
+					button_site_720 = InlineKeyboardButton('📹 Видео 720', url=url_720)
+					button_site_360 = InlineKeyboardButton('🎥 Видео 360', url=url_360)
+					button_site_pic = InlineKeyboardButton('🌃 Получить превью', url=url_image)
 					inline_url_site = InlineKeyboardMarkup(row_width=2).add(button_site_720, button_site_360, button_site_pic)
 					await message.answer('Вот и кнопки на скачивание видеоролика\n'
 						'Кликай на ту кнопку соответственно которой хочешь разрешение видеоролика:',
@@ -268,9 +267,16 @@ async def msite(message: types.Message, state: FSMContext):
 				big_url = answer.split('/')[3]
 				try:
 					url = big_url.split('=')[1]
-					button_msite_720 = InlineKeyboardButton('📹 Видео 720', url=f'https://presaver.com/{url}/download/22')
-					button_msite_360 = InlineKeyboardButton('🎥 Видео 360', url=f'https://presaver.com/{url}/download/18')
-					button_msite_pic = InlineKeyboardButton('🌃 Получить превью', url=f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg')
+					link_720 = f'https://presaver.com/{url}/download/22'
+					link_360 = f'https://presaver.com/{url}/download/18'
+					link_image = f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg'
+					url_720 = create_link(link_720)
+					url_360 = create_link(link_360)
+					url_image = create_link(link_image)
+					button_msite_720 = InlineKeyboardButton('📹 Видео 720', url=url_720)
+					button_msite_360 = InlineKeyboardButton('🎥 Видео 360', url=url_360)
+					button_msite_pic = InlineKeyboardButton('🌃 Получить превью', url=url_image)
+					inline_url_msite = InlineKeyboardMarkup(row_width=2).add(button_msite_720, button_msite_360, button_msite_pic)
 					inline_url_msite = InlineKeyboardMarkup(row_width=2).add(button_msite_720, button_msite_360, button_msite_pic)
 					await message.answer('Вот и кнопки на скачивание видеоролика\n'
 						'Кликай на ту кнопку соответственно которой хочешь разрешение видеоролика:',
@@ -279,9 +285,15 @@ async def msite(message: types.Message, state: FSMContext):
 						reply_markup=kb.reply_r_main)
 					await state.reset_state()
 				except:
-					button_msite_720 = InlineKeyboardButton('📹 Видео 720', url=f'https://presaver.com/{big_url}/download/22')
-					button_msite_360 = InlineKeyboardButton('🎥 Видео 360', url=f'https://presaver.com/{big_url}/download/18')
-					button_msite_pic = InlineKeyboardButton('🌃 Получить превью', url=f'https://i.ytimg.com/vi/{big_url}/maxresdefault.jpg')
+					link_720 = f'https://presaver.com/{url}/download/22'
+					link_360 = f'https://presaver.com/{url}/download/18'
+					link_image = f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg'
+					url_720 = create_link(link_720)
+					url_360 = create_link(link_360)
+					url_image = create_link(link_image)
+					button_msite_720 = InlineKeyboardButton('📹 Видео 720', url=url_720)
+					button_msite_360 = InlineKeyboardButton('🎥 Видео 360', url=url_360)
+					button_msite_pic = InlineKeyboardButton('🌃 Получить превью', url=url_image)
 					inline_url_msite = InlineKeyboardMarkup(row_width=2).add(button_msite_720, button_msite_360, button_msite_pic)
 					await message.answer('Вот и кнопки на скачивание видеоролика\n'
 						'Кликай на ту кнопку соответственно которой хочешь разрешение видеоролика:',
@@ -295,7 +307,7 @@ async def msite(message: types.Message, state: FSMContext):
 
 @dp.callback_query_handler(lambda message: message.data.startswith("fla_check"))
 async def fla_check(callback_query: types.CallbackQuery, state:FSMContext):
-	user_channel = await bot.get_chat_member(chat_id=-1001269993979, user_id=callback_query.from_user.id)
+	user_channel = await bot.get_chat_member(chat_id=-1001196469736, user_id=callback_query.from_user.id)
 	if user_channel["status"] == 'left':
 		"""для тех кто не подписался"""
 		async with state.proxy() as data:
