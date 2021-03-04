@@ -7,3 +7,6 @@ class Url(StatesGroup):
 
 class Lk(StatesGroup):
 	choice = State()
+
+class Mailing(StatesGroup):
+    text = State()
