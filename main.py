@@ -2,6 +2,7 @@ import logging, random, kb, asyncio, re
 
 from states import Url, Lk
 from bot import TOKEN, unknown
+from create import create_link
 from aiogram.dispatcher import FSMContext
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -190,9 +191,15 @@ async def app(message: types.Message, state: FSMContext):
 
 			else:
 				url = answer.split('/')[3]
-				button_app_720 = InlineKeyboardButton('📹 Видео 720', url=f'https://presaver.com/{url}/download/22')
-				button_app_360 = InlineKeyboardButton('🎥 Видео 360', url=f'https://presaver.com/{url}/download/18')
-				button_app_pic = InlineKeyboardButton('🌃 Получить превью', url=f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg')
+				link_720 = f'https://presaver.com/{url}/download/22'
+				link_360 = f'https://presaver.com/{url}/download/18'
+				link_image = f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg'
+				url_720 = create_link(link_720)
+				url_360 = create_link(link_360)
+				url_image = create_link(link_image)
+				button_app_720 = InlineKeyboardButton('📹 Видео 720', url=url_720)
+				button_app_360 = InlineKeyboardButton('🎥 Видео 360', url=url_360)
+				button_app_pic = InlineKeyboardButton('🌃 Получить превью', url=url_image)
 				inline_url_app = InlineKeyboardMarkup(row_width=2).add(button_app_720, button_app_360, button_app_pic)
 				await message.answer('Вот и кнопки на скачивание видеоролика\n'
 					'Кликай на ту кнопку соответственно которой хочешь разрешение видеоролика:',
