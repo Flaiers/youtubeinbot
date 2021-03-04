@@ -1,10 +1,7 @@
-import logging
-import asyncio
-import kb
-import re
+import logging, random, kb, asyncio, re
 
 from states import Url, Lk
-from config import TOKEN
+from bot import TOKEN, unknown
 from aiogram.dispatcher import FSMContext
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -106,7 +103,8 @@ async def message(message: types.Message):
 			await Lk.choice.set()
 
 		else:
-			await message.answer('Я тебя не понимаю 🙃')
+			await message.answer(random.choice(unknown),
+				reply_markup=kb.reply_load_lk)
 
 # хэндлер личного кабинета
 @dp.message_handler(state=Lk.choice, content_types=types.ContentTypes.TEXT)
@@ -171,8 +169,11 @@ async def lk(message: types.Message, state: FSMContext):
 			await state.reset_state()
 
 		else:
-			await message.answer('Я тебя не понимаю 🙃')
+			await message.answer(random.choice(unknown),
+				reply_markup=kb.reply_lk)
+
 			await state.reset_state()
+			await Lk.choice.set()
 
 # хэндлер получение от пользователя Url.app
 @dp.message_handler(state=Url.app, content_types=types.ContentTypes.TEXT)
