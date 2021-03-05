@@ -1,6 +1,6 @@
 from aiogram.dispatcher.filters.state import StatesGroup, State
 
-class Url(StatesGroup):
+class Save(StatesGroup):
 	app = State()
 	site = State()
 	msite = State()
