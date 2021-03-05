@@ -10,8 +10,8 @@ from aiogram.dispatcher.filters import CommandStart
 # меню для админов
 @dp.message_handler(user_id=admin_id, commands=['admin'])
 async def admin(message: types.Message):
-    await message.answer('👋 Приветствую, Admin – {0.first_name}!'
-        '\n/mailing – произвести рассылку сообщения всем пользователям бота'.format(message.from_user),
+    await message.answer('👋 Приветствую, Admin – {0.first_name}!\n'
+        'На кнопках отображены твои возможности'.format(message.from_user),
         reply_markup=kb.reply_menu_admin)
 
 # Рассылка по юзерам
@@ -24,5 +24,5 @@ async def mailing(message: types.Message):
 async def mailing_start(message: types.Message, state: FSMContext):
     text = message.text
     async with state.proxy() as data:
-        data['text1'] = text
-        mail = data['text1']
+        data['mail'] = text
+        mail = data['mail']
