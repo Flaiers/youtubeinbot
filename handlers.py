@@ -9,7 +9,6 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import CommandStart
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-
 # хэндлер на команду start
 @dp.message_handler(CommandStart())
 async def start(message: types.Message):
@@ -91,8 +90,8 @@ async def message(message: types.Message):
 async def lk(message: types.Message, state: FSMContext):
 	lk = message.text
 	async with state.proxy() as data:
-		data['lk1'] = lk
-		choice = data['lk1']
+		data['lk_request'] = lk
+		choice = data['lk_request']
 		if choice == '💎 Мои кристаллы':
 			button_sell = InlineKeyboardButton('Обмен кристаллов', callback_data='sell')
 			inline_sell = InlineKeyboardMarkup(row_width=1).add(button_sell)
@@ -160,8 +159,8 @@ async def lk(message: types.Message, state: FSMContext):
 async def app(message: types.Message, state: FSMContext):
 	app = message.text
 	async with state.proxy() as data:
-		data['app1'] = app
-		answer = data['app1']
+		data['app_request'] = app
+		answer = data['app_request']
 		try:
 			if answer == '⬅️ Назад':
 				await message.answer('Выбери тип, откуда ты хочешь отправить ссылку и придерживайся инструкции!',
@@ -194,8 +193,8 @@ async def app(message: types.Message, state: FSMContext):
 async def site(message: types.Message, state: FSMContext):
 	site = message.text
 	async with state.proxy() as data:
-		data['site1'] = site
-		answer = data['site1']
+		data['site_request'] = site
+		answer = data['site_request']
 		try:
 			if answer == '⬅️ Назад':
 				await message.answer('Выбери тип, откуда ты хочешь отправить ссылку и придерживайся инструкции!',
@@ -247,8 +246,8 @@ async def site(message: types.Message, state: FSMContext):
 async def msite(message: types.Message, state: FSMContext):
 	msite = message.text
 	async with state.proxy() as data:
-		data['msite1'] = msite
-		answer = data['msite1']
+		data['msite_request'] = msite
+		answer = data['msite_request']
 		try:
 			if answer == '⬅️ Назад':
 				await message.answer('Выбери тип, откуда ты хочешь отправить ссылку и придерживайся инструкции!',
