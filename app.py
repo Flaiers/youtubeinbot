@@ -4,24 +4,31 @@ from datetime import datetime
 from loader import dp, bot, storage
 from telethon.sync import TelegramClient
 from telethon.tl.functions.users import GetFullUserRequest
+import pymyip
 
-async def get_user(id):
+async def get_user_id(id):
 	async with TelegramClient(name, api_id, api_hash) as client:
 		await client.start()
 		username = await client(GetFullUserRequest(id))
 		return username.user.first_name
 
 async def on_startup(dp):
-	username = await get_user(admin_id)
+	ip = pymyip.get_ip()
+	city = pymyip.get_city()
+	country = pymyip.get_country()
+	username = await get_user_id(admin_id)
 	now = datetime.now()
-	time = now.strftime('%d/%m/%y %T')
-	await bot.send_message(admin_id, f'Привет, {username}!\nЯ запущен!\nСейчас: ' + time)
+	time = now.strftime('%d/%m/%y в %T UTC')
+	await bot.send_message(admin_id, f'Привет, {username}!\nЗапущен {time}\nМесто запуска: {city}, {country} (IP = {ip})')
 
 async def on_shutdown(dp):
-	username = await get_user(admin_id)
+	ip = pymyip.get_ip()
+	city = pymyip.get_city()
+	country = pymyip.get_country()
+	username = await get_user_id(admin_id)
 	now = datetime.now()
-	time = now.strftime('%d/%m/%y %T')
-	await bot.send_message(admin_id, f'Пока, {username}!\nЯ остановлен!\nСейчас: ' + time)
+	time = now.strftime('%d/%m/%y в %T UTC')
+	await bot.send_message(admin_id, f'Пока, {username}!\nОстановлен {time}\nМесто остановки: {city}, {country} (IP = {ip})')
 	await bot.close()
 	await storage.close()
 
