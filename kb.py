@@ -1,5 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, \
-					InlineKeyboardMarkup, InlineKeyboardButton
+		InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardRemove
 
 # текст кнопок
 button_main = KeyboardButton('🏠 Главное меню')
@@ -33,3 +33,5 @@ reply_back = ReplyKeyboardMarkup(resize_keyboard=True).add(button_back)
 
 reply_device = ReplyKeyboardMarkup(resize_keyboard=True) \
 			.add(button_app, button_site).add(button_msite).add(button_main)
+
+reply_remove = ReplyKeyboardRemove()
