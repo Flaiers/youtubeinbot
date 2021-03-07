@@ -34,12 +34,12 @@ async def message(message: types.Message):
 			reply_markup=kb.reply_menu)
 
 	elif message.text == '💾 Скачать видео':
-		await message.answer('Отправь мне ссылку на видеоролик, также можешь вернуться назад, нажав на кнопку',
+		await message.answer('Отправь мне ссылку на видеоролик, также можешь вернуться Назад, нажав на кнопку',
 			reply_markup=kb.reply_back)
 		await Save.video.set()
 
 	elif message.text == '🔄 Скачать ещё раз':
-		await message.answer('Отправь мне ссылку на видеоролик, также можешь вернуться назад, нажав на кнопку',
+		await message.answer('Отправь мне ссылку на видеоролик, также можешь вернуться Назад, нажав на кнопку',
 			reply_markup=kb.reply_back)
 		await Save.video.set()
 
@@ -50,7 +50,7 @@ async def message(message: types.Message):
 		await Lk.choice.set()
 
 	elif message.text == '💬 Служба поддержки':
-		await message.answer('⬇️ По всем вопросам сюда ⬇️\n'
+		await message.answer('🔽 По всем вопросам сюда 🔽\n'
 			'                   t.me/Flaiers',
 			reply_markup=kb.reply_main)
 
@@ -142,8 +142,11 @@ async def link(message: types.Message, state: FSMContext):
 		answer = data['link_request']
 		try:
 			if answer == '⬅️ Назад':
-				await message.answer('Выбери тип, откуда ты хочешь отправить ссылку и придерживайся инструкции!',
-					reply_markup=kb.reply_device)
+				await message.answer('Ты находишься в Главном меню\n'
+					'Чтобы скачать видео, нажми 💾 Скачать видео\n'
+					'Зайти в ЛК, нажми 📰 Личный кабинет\n'
+					'Есть вопрос, нажми на кнопку ниже',
+					reply_markup=kb.reply_menu)
 				await state.reset_state()
 			else:
 				try:
@@ -162,12 +165,28 @@ async def link(message: types.Message, state: FSMContext):
 							except IndexError:
 								await message.answer('Ты вводишь какую-то неправильную ссылку, отправь её мне снова, или вернись в Назад',
 									reply_markup=kb.reply_back)
+				try:
+					link_720 = f'https://presaver.com/{url}/download/22'
+					link_360 = f'https://presaver.com/{url}/download/18'
+					link_image = f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg'
+					'''url_720 = create_link(link_720)
+					url_360 = create_link(link_360)
+					url_image = create_link(link_image)'''
+					button_720 = InlineKeyboardButton('📹 Видео 720', url=link_720)
+					button_360 = InlineKeyboardButton('🎥 Видео 360', url=link_360)
+					button_pic = InlineKeyboardButton('🌃 Получить превью', url=link_image)
+					inline_url = InlineKeyboardMarkup(row_width=2).add(button_720, button_360, button_pic)
+					await message.answer('Вот и кнопки на скачивание видеоролика\n'
+						'Кликай на ту кнопку соответственно которой хочешь разрешение видеоролика:',
+						reply_markup=inline_url)
+					await message.answer('Теперь ты можешь ещё раз скачать видеоролик, или вернуться в Главное меню',
+						reply_markup=kb.reply_r_main)
+					await state.reset_state()
+				except UnboundLocalError:
+					pass
 
-				await message.answer(url)
-				await state.reset_state()
-		except IndexError:
-			await message.answer('Ты вводишь какую-то неправильную ссылку, отправь её мне снова',
-				reply_markup=kb.reply_back)
+		except Exception:
+			pass
 
 @dp.callback_query_handler(lambda message: message.data.startswith("fla_check"))
 async def fla_check(callback_query: types.CallbackQuery, state:FSMContext):
