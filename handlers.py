@@ -36,10 +36,12 @@ async def message(message: types.Message):
 	elif message.text == '💾 Скачать видео':
 		await message.answer('Отправь мне ссылку на видеоролик, также можешь вернуться назад, нажав на кнопку',
 			reply_markup=kb.reply_back)
+		await Save.video.set()
 
 	elif message.text == '🔄 Скачать ещё раз':
 		await message.answer('Отправь мне ссылку на видеоролик, также можешь вернуться назад, нажав на кнопку',
 			reply_markup=kb.reply_back)
+		await Save.video.set()
 
 	elif message.text == '📰 Личный кабинет':
 		await message.answer('Ты зашёл в Личный кабинет, в разделе\n'
@@ -131,13 +133,13 @@ async def lk(message: types.Message, state: FSMContext):
 			await state.reset_state()
 			await Lk.choice.set()
 
-# хэндлер получение от пользователя Save.app
-@dp.message_handler(state=Save.app)
-async def app(message: types.Message, state: FSMContext):
-	app = message.text
+# хэндлер получение ссылки от пользователя
+@dp.message_handler(state=Save.video)
+async def link(message: types.Message, state: FSMContext):
+	link = message.text
 	async with state.proxy() as data:
-		data['app_request'] = app
-		answer = data['app_request']
+		data['link_request'] = link
+		answer = data['link_request']
 		try:
 			if answer == '⬅️ Назад':
 				await message.answer('Выбери тип, откуда ты хочешь отправить ссылку и придерживайся инструкции!',
@@ -164,7 +166,7 @@ async def app(message: types.Message, state: FSMContext):
 				await message.answer(url)
 				await state.reset_state()
 		except IndexError:
-			await message.answer('Ты вводишь какую-то неправильную ссылку, отправь её мне снова, или вернись в Назад',
+			await message.answer('Ты вводишь какую-то неправильную ссылку, отправь её мне снова',
 				reply_markup=kb.reply_back)
 
 @dp.callback_query_handler(lambda message: message.data.startswith("fla_check"))
