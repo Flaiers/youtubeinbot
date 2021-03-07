@@ -190,58 +190,6 @@ async def app(message: types.Message, state: FSMContext):
 			await message.answer('Ты вводишь какую-то неправильную ссылку, отправь её мне снова, или вернись в Назад',
 				reply_markup=kb.reply_back)
 
-# хэндлер получение от пользователя Save.site
-@dp.message_handler(state=Save.site)
-async def site(message: types.Message, state: FSMContext):
-	site = message.text
-	async with state.proxy() as data:
-		data['site_request'] = site
-		answer = data['site_request']
-		try:
-			if answer == '⬅️ Назад':
-				await message.answer('Выбери тип, откуда ты хочешь отправить ссылку и придерживайся инструкции!',
-					reply_markup=kb.reply_device)
-				await state.reset_state()
-
-			else:
-				big_url = answer.split('/')[3]
-				try:
-					url = big_url.split('=')[1]
-					link_720 = f'https://presaver.com/{url}/download/22'
-					link_360 = f'https://presaver.com/{url}/download/18'
-					link_image = f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg'
-					url_720 = create_link(link_720)
-					url_360 = create_link(link_360)
-					url_image = create_link(link_image)
-					button_site_720 = InlineKeyboardButton('📹 Видео 720', url=url_720)
-					button_site_360 = InlineKeyboardButton('🎥 Видео 360', url=url_360)
-					button_site_pic = InlineKeyboardButton('🌃 Получить превью', url=url_image)
-					inline_url_site = InlineKeyboardMarkup(row_width=2).add(button_site_720, button_site_360, button_site_pic)
-					await message.answer('Вот и кнопки на скачивание видеоролика\n'
-						'Кликай на ту кнопку соответственно которой хочешь разрешение видеоролика:',
-						reply_markup=inline_url_site)
-					await message.answer('Теперь ты можешь ещё раз скачать видеоролик, или вернуться в Главное меню',
-						reply_markup=kb.reply_r_main)
-					await state.reset_state()
-				except:
-					link_720 = f'https://presaver.com/{url}/download/22'
-					link_360 = f'https://presaver.com/{url}/download/18'
-					link_image = f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg'
-					url_720 = create_link(link_720)
-					url_360 = create_link(link_360)
-					url_image = create_link(link_image)
-					button_site_720 = InlineKeyboardButton('📹 Видео 720', url=url_720)
-					button_site_360 = InlineKeyboardButton('🎥 Видео 360', url=url_360)
-					button_site_pic = InlineKeyboardButton('🌃 Получить превью', url=url_image)
-					inline_url_site = InlineKeyboardMarkup(row_width=2).add(button_site_720, button_site_360, button_site_pic)
-					await message.answer('Вот и кнопки на скачивание видеоролика\n'
-						'Кликай на ту кнопку соответственно которой хочешь разрешение видеоролика:',
-						reply_markup=inline_url_site)
-					await message.answer('Теперь ты можешь ещё раз скачать видеоролик, или вернуться в Главное меню',
-						reply_markup=kb.reply_r_main)
-					await state.reset_state()
-		except IndexError:
-			await message.answer('Ты вводишь какую-то неправильную ссылку, отправь её мне снова')
 
 # хэндлер получение от пользователя Save.msite
 @dp.message_handler(state=Save.msite)
