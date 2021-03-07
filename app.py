@@ -19,8 +19,7 @@ async def on_startup(dp):
 	username = await get_user_id(admin_id)
 	now = datetime.now()
 	time = now.strftime('%d/%m/%y в %T UTC')
-	await bot.send_message(admin_id, f'Привет, {username}!\nЗапущен {time}\nМесто запуска: {city}, {country} (IP = {ip})',
-		reply_markup=kb.reply_menu_admin)
+	await bot.send_message(admin_id, f'Привет, {username}!\nЗапущен {time}\nМесто запуска: {city}, {country} (IP = {ip})')
 
 async def on_shutdown(dp):
 	ip = pymyip.get_ip()
@@ -34,9 +33,8 @@ async def on_shutdown(dp):
 	await bot.close()
 	await storage.close()
 
-
 if __name__ == '__main__':
 	from admin import dp
 	from handlers import dp
 
-	executor.start_polling(dp, skip_updates=True, on_shutdown=on_shutdown, on_startup=on_startup)
+	executor.start_polling(dp, skip_updates=True, on_startup=on_startup, on_shutdown=on_shutdown)
