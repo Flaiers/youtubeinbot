@@ -1,8 +1,9 @@
 # токен бота
 TOKEN = ''
 
-# api shrlink
-api = ''
+# api bc.vc
+key = ''
+uid = _
 
 # admin -@Flaiers
 admin_id = _
