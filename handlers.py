@@ -172,12 +172,12 @@ async def link(message: types.Message, state: FSMContext):
 					url_720 = create_link(link_720)
 					url_360 = create_link(link_360)
 					url_image = create_link(link_image)
-					button_720 = InlineKeyboardButton('📹 Видео 720', url=url_720 )
+					button_720 = InlineKeyboardButton('📹 Видео 720', url=url_720)
 					button_360 = InlineKeyboardButton('🎥 Видео 360', url=url_360)
 					button_pic = InlineKeyboardButton('🌃 Получить превью', url=url_image)
 					inline_url = InlineKeyboardMarkup(row_width=2).add(button_720, button_360, button_pic)
 					await message.answer('Вот и кнопки на скачивание видеоролика\n'
-						'Кликай на ту кнопку соответственно которой хочешь разрешение видеоролика:',
+						'Кликай на ту кнопку соответственно которой хочешь разрешение видеоролика или скачать превью видеоролика:',
 						reply_markup=inline_url)
 					await message.answer('Теперь ты можешь ещё раз скачать видеоролик, или вернуться в Главное меню',
 						reply_markup=kb.reply_r_main)
