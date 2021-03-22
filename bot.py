@@ -1,9 +1,8 @@
 # токен бота
 TOKEN = ''
 
-# api bc.vc
+# api q32
 key = ''
-uid = _
 
 # admin -@Flaiers
 admin_id = _
