@@ -1,4 +1,4 @@
-from bot import key, uid
+from bot import key
 import requests
 
 def create_link(link):
