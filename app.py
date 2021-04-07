@@ -15,20 +15,18 @@ async def get_user_id(id):
 async def on_startup(dp):
 	ip = pymyip.get_ip()
 	city = pymyip.get_city()
-	country = pymyip.get_country()
 	username = await get_user_id(admin_id)
 	now = datetime.now()
 	time = now.strftime('%d/%m/%y в %T UTC')
-	await bot.send_message(admin_id, f'Привет, {username}!\nЗапущен {time}\nМесто запуска: {city}, {country} (IP = {ip})')
+	await bot.send_message(admin_id, f'Привет, {username}!\nЗапущен {time}\nМесто запуска: {city} (IP = {ip})')
 
 async def on_shutdown(dp):
 	ip = pymyip.get_ip()
 	city = pymyip.get_city()
-	country = pymyip.get_country()
 	username = await get_user_id(admin_id)
 	now = datetime.now()
 	time = now.strftime('%d/%m/%y в %T UTC')
-	await bot.send_message(admin_id, f'Пока, {username}!\nОстановлен {time}\nМесто остановки: {city}, {country} (IP = {ip})',
+	await bot.send_message(admin_id, f'Пока, {username}!\nОстановлен {time}\nМесто остановки: {city} (IP = {ip})',
 		reply_markup=kb.reply_remove)
 	await bot.close()
 	await storage.close()
