@@ -1,6 +1,7 @@
 from bot import admin_id, api_id, api_hash, name
 from aiogram import executor
 from datetime import datetime
+from time import sleep
 from loader import dp, bot, storage
 from telethon.sync import TelegramClient
 from telethon.tl.functions.users import GetFullUserRequest
@@ -18,6 +19,7 @@ async def on_startup(dp):
 	username = await get_user_id(admin_id)
 	now = datetime.now()
 	time = now.strftime('%d/%m/%y в %T UTC')
+	sleep(5)
 	await bot.send_message(admin_id, f'Привет, {username}!\nЗапущен {time}\nМесто запуска: {city} (IP = {ip})')
 
 async def on_shutdown(dp):
@@ -26,6 +28,7 @@ async def on_shutdown(dp):
 	username = await get_user_id(admin_id)
 	now = datetime.now()
 	time = now.strftime('%d/%m/%y в %T UTC')
+	sleep(5)
 	await bot.send_message(admin_id, f'Пока, {username}!\nОстановлен {time}\nМесто остановки: {city} (IP = {ip})',
 		reply_markup=kb.reply_remove)
 	await bot.close()
