@@ -3,7 +3,7 @@ import random, kb
 from bot import unknown
 from aiogram import types
 from states import Lk, Save
-from create import create_link
+from create import video_link
 from loader import dp, bot
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import CommandStart
@@ -166,12 +166,9 @@ async def link(message: types.Message, state: FSMContext):
 								await message.answer('Ты вводишь какую-то неправильную ссылку, отправь её мне снова, или вернись в Назад',
 									reply_markup=kb.reply_back)
 				try:
-					link_720 = f'https://presaver.com/{url}/download/22'
-					link_360 = f'https://presaver.com/{url}/download/18'
-					link_image = f'https://i.ytimg.com/vi/{url}/maxresdefault.jpg'
-					url_720 = create_link(link_720)
-					url_360 = create_link(link_360)
-					url_image = create_link(link_image)
+					url_720 = video_link('720', url)
+					url_360 = video_link('360', url)
+					url_image = video_link('img', url)
 					button_720 = InlineKeyboardButton('📹 Видео 720', url=url_720)
 					button_360 = InlineKeyboardButton('🎥 Видео 360', url=url_360)
 					button_pic = InlineKeyboardButton('🌃 Получить превью', url=url_image)

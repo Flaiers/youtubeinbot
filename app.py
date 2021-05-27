@@ -5,7 +5,7 @@ from time import sleep
 from loader import dp, bot, storage
 from telethon.sync import TelegramClient
 from telethon.tl.functions.users import GetFullUserRequest
-import pymyip, kb
+import kb
 
 async def get_user_id(id):
 	async with TelegramClient(name, api_id, api_hash) as client:
@@ -14,22 +14,18 @@ async def get_user_id(id):
 		return username.user.first_name
 
 async def on_startup(dp):
-	ip = pymyip.get_ip()
-	city = pymyip.get_city()
 	username = await get_user_id(admin_id)
 	now = datetime.now()
 	time = now.strftime('%d/%m/%y в %T UTC')
 	sleep(5)
-	await bot.send_message(admin_id, f'Привет, {username}!\nЗапущен {time}\nМесто запуска: {city} (IP = {ip})')
+	await bot.send_message(admin_id, f'Привет, {username}!\nЗапущен {time}')
 
 async def on_shutdown(dp):
-	ip = pymyip.get_ip()
-	city = pymyip.get_city()
 	username = await get_user_id(admin_id)
 	now = datetime.now()
 	time = now.strftime('%d/%m/%y в %T UTC')
 	sleep(5)
-	await bot.send_message(admin_id, f'Пока, {username}!\nОстановлен {time}\nМесто остановки: {city} (IP = {ip})',
+	await bot.send_message(admin_id, f'Пока, {username}!\nОстановлен {time}',
 		reply_markup=kb.reply_remove)
 	await bot.close()
 	await storage.close()
