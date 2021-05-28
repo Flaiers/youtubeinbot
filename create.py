@@ -1,12 +1,12 @@
 from bs4 import BeautifulSoup
 from bot import key, uid
-import requests
+import requests, urllib.request as req
 
 def video_title(link):
-	response = requests.get(link)
+	response = requests.get(f'https://www.youtube.com/watch?v={link}')
 	soup = BeautifulSoup(response.text, 'lxml')
-	title = soup.find("title").text.split(' - ')[0]
-	return title
+	title = soup.find("title").text.split(' - YouTube')[0]
+	return req.pathname2url(title)
 
 def shorten(link):
 	url = f'https://bc.vc/api.php?key={key}&uid={uid}&url={link}&format=text' 
