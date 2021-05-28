@@ -1,4 +1,4 @@
-import random, kb
+import random, kb, asyncio
 
 from bot import unknown
 from aiogram import types
@@ -9,13 +9,14 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import CommandStart
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+
 # хэндлер на команду start
 @dp.message_handler(CommandStart())
 async def start(message: types.Message):
 	button_youtube0 = InlineKeyboardButton('Подписаться', url='t.me/joinchat/R1Ct6BRjHCkO_AYO')
 	inline_youtube0 = InlineKeyboardMarkup(row_width=1).add(button_youtube0)
 
-	await message.answer('Подпишись на наш канал — Скачать Видео Ютуб в котором мы постим обновления бота, выкладываем интеремную информацию в сфере IT, а также устраиваем розыгрыши!\n\n'
+	await message.answer('Подпишись на наш канал — Скачать Видео Ютуб в котором мы постим обновления бота, выкладываем интересную информацию в сфере IT, а также устраиваем розыгрыши!\n\n'
 		'Мы будем очень благодарны тебе 🥰',
 		reply_markup=inline_youtube0)
 	
