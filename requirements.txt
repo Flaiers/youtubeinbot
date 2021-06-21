@@ -1,0 +1,6 @@
+pytube
+aiogram
+datetime
+telethon
+requests
+urllib3

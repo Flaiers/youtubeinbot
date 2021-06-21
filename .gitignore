@@ -1,3 +1,6 @@
-bot.py
 __pycache__/
 *.pyc
+root.session
+env
+venv
+myvenv
