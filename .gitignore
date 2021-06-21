@@ -4,3 +4,4 @@ root.session
 env
 venv
 myvenv
+bot.py
