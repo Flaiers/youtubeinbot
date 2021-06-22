@@ -167,6 +167,7 @@ async def link(message: types.Message, state: FSMContext):
 								await message.answer('Ты вводишь какую-то неправильную ссылку, отправь её мне снова, или вернись в Назад',
 									reply_markup=kb.reply_back)
 				try:
+					await message.answer('Отправляю... Подождите!')
 					url_720 = video_link('720', url)
 					url_360 = video_link('360', url)
 					url_image = video_link('img', url)
