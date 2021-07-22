@@ -1,4 +1,4 @@
-pytube
+bs4
 aiogram
 datetime
 telethon
