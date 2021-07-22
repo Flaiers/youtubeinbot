@@ -1,4 +1,4 @@
-import random, kb, asyncio
+import random, kb, asyncio, logging
 
 from bot import unknown
 from aiogram import types
@@ -171,6 +171,7 @@ async def link(message: types.Message, state: FSMContext):
 					url_720 = video_link('720', url)
 					url_360 = video_link('360', url)
 					url_image = video_link('img', url)
+					logging.info('Ссылки сформированы и готовы к отправке\n\n')
 					button_720 = InlineKeyboardButton('📹 Видео 720', url=url_720)
 					button_360 = InlineKeyboardButton('🎥 Видео 360', url=url_360)
 					button_pic = InlineKeyboardButton('🌃 Получить превью', url=url_image)
