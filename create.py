@@ -1,10 +1,14 @@
 from bot import key, uid
+from bs4 import BeautifulSoup as bs
+
 import requests, urllib.request as req
-import pytube
+
 
 def video_title(link):
-	video = pytube.YouTube(f'https://www.youtube.com/watch?v={link}')
-	return req.pathname2url(video.title)
+	page_video = requests.get(f'https://www.youtube.com/watch?v={link}')
+	html_video = bs(page_video.content, 'html.parser')
+	title = html_video.find('title').text
+	return req.pathname2url(title)
 
 def shorten(link):
 	url = f'https://bc.vc/api.php?key={key}&uid={uid}&url={link}&format=text' 
