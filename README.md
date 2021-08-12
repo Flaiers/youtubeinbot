@@ -2,7 +2,7 @@
 
 #### The service for download video at YouTube
 <a href="https://www.youtube.com/">
-    <img src="https://www.youtube.com/about/static/svgs/icons/brand-resources/YouTube-logo-full_color_dark.svg" width="330">
+    <img src="https://ltdfoto.ru/images/yt_logo_rgb_dark.png" width="330">
 </a>
 
 Follow me
