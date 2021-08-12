@@ -10,7 +10,7 @@ def video_title(link: str) -> str:
 	page_video = requests.get(f'https://www.youtube.com/watch?v={link}')
 	html_video = bs(page_video.content, 'html.parser')
 
-	title = html_video.find('title').text
+	title = html_video.find('title').text.replace(' - YouTube', '')
 	logging.info(f'\nСслыка на видео "https://www.youtube.com/watch?v={link}" — "{title}"')
 
 	return req.pathname2url(title)
