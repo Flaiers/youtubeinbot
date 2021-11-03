@@ -135,5 +135,5 @@ dmypy.json
 /static
 
 .idea/
-root.session
+*.session
 config.py
