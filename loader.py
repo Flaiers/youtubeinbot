@@ -1,8 +1,11 @@
-import logging
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
+
+from aiogram import Bot, Dispatcher
 
 from config import TOKEN
-from aiogram import Bot, Dispatcher
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
+
+import logging
+
 
 # уровень логов
 logging.basicConfig(level=logging.INFO)

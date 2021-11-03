@@ -1,5 +1,7 @@
-from aiogram import types
 from config import admin_id
+
+from aiogram import types
+
 from loader import dp
 
 

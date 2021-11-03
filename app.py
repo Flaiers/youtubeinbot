@@ -1,12 +1,19 @@
-import kb
+
+from telethon.tl.functions.users import GetFullUserRequest
 
 from config import admin_id, api_id, api_hash, name
-from aiogram import executor
-from datetime import datetime
-from time import sleep
-from loader import bot, storage
+
 from telethon.sync import TelegramClient
-from telethon.tl.functions.users import GetFullUserRequest
+
+from loader import bot, storage
+
+from datetime import datetime
+
+from aiogram import executor
+
+from time import sleep
+
+import kb
 
 
 async def get_user_id(id):

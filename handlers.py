@@ -1,15 +1,21 @@
+from aiogram.dispatcher.filters import CommandStart
+from aiogram.dispatcher import FSMContext
+
+from create import video_link
+from config import unknown
+from loader import dp, bot
+
+from aiogram.types import (
+	InlineKeyboardMarkup,
+	InlineKeyboardButton
+)
+from aiogram import types
+
+from states import User
+
+import logging
 import random
 import kb
-import logging
-
-from config import unknown
-from aiogram import types
-from states import User
-from create import video_link
-from loader import dp, bot
-from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters import CommandStart
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 # хэндлер на команду start

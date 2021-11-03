@@ -1,5 +1,8 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, \
-							ReplyKeyboardRemove
+from aiogram.types import (
+	ReplyKeyboardMarkup,
+	KeyboardButton,
+	ReplyKeyboardRemove
+)
 
 # текст кнопок
 button_main = KeyboardButton('🏠 Главное меню')
